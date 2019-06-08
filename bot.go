@@ -1,21 +1,23 @@
-package main
+package bot
 
 import (
 	"fmt"
+	"config"
 	"github.com/bwmarrin/discordgo"
 )
 
-const token string = "NTg2ODI4Njc2NTYyNDE5NzI4.XPt1gg.s-VWxK2en4SG6niljYLy4rixw8I"
 var BotID string 
-func main() {
-	dg, err := discordgo.New("Bot " + token)
+var goBat = *discordgo.Session
+
+func Start() {
+	gotBot, err := discordgo.New("Bot " + token)
 
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
-	u, err := dg.User("@me")
+	u, err := gotBot.User("@me")
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -24,9 +26,9 @@ func main() {
 
 	BotID = u.ID
 
-	dg.AddHandler(messageHandler)
+	gotBot.AddHandler(messageHandler)
 
-	err = dg.Open()
+	err = gotBot.Open()
 
 	if err != nil {
 		fmt.Println(err.Error())
